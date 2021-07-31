@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./validate.js"></script>
     <!-- For ICON -->
     
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
@@ -42,21 +43,20 @@
         <!-- Body Container -->
         <div class="jumbotron">
             <center><img class="card-img-top img-fluid" src="./images/logo_latest.png" alt="Logo" style="margin-top:-50px;height: 200px; width: 230px;"></center>
-                <form method="POST" action="#" class="needs-validation">
+            <p id="test"  onclick="test();">Here</p>   
+            <form method="POST" action="./regdb.php" class="needs-validation" onsubmit="return validate();" enctype="multipart/form-data">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                <span class="input-group-text bg-success text-white">Full Name</span>
                                     <span class="input-group-text">&#128101;</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Full Name" id="fname" name="fname">
+                                <input type="text" class="form-control" onkeyup="capitalize('fname')" placeholder="Full Name" id="fname" name="fname">
                             </div>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                <span class="input-group-text bg-success text-white">Address</span>
                                     <span class="input-group-text">&#127968;</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Your Address" id="pass" name="pass">
+                                <input type="text" class="form-control" onkeyup="capitalize('address')" placeholder="Your Address" id="address" name="address">
                             </div>
 
                             <div class="input-group mb-3">
@@ -66,11 +66,11 @@
                                 </div>
                                 <div class="form-control">
                                 <div class="custom-control custom-radio custom-control-inline" style="float: left;">
-                                    <input type="radio" class="custom-control-input" id="male" name="gender" value="customEx">
+                                    <input type="radio" class="custom-control-input" id="male" name="gender" value="Male">
                                     <label class="custom-control-label" for="male">Male</label>
                                   </div>
                                   <div class="custom-control custom-radio custom-control-inline" style="float: left;">
-                                    <input type="radio" class="custom-control-input" id="female" name="gender" value="customEx">
+                                    <input type="radio" class="custom-control-input" id="female" name="gender" value="Female">
                                     <label class="custom-control-label" for="female">Female</label>
                                   </div> 
                                 </div>
@@ -80,36 +80,49 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-success text-white">District</span>
                                 </div>
-                            <select name="cars" class="custom-select">
-                                <option selected>Select your District</option>
-                                <option value="volvo">Volvo</option>
-                                <option value="fiat">Fiat</option>
-                                <option value="audi">Audi</option>
+                            <select id="district" name="district" class="custom-select">
+                              <option value="" selected>--- Select District ---</option>
+                              <option value="Bishnupur">Bishnupur</option>
+                              <option value="Thoubal">Thoubal</option>
+                              <option value="Imphal East">Imphal East</option>
+                              <option value="Imphal West">Imphal West</option>
+                              <option value="Senapati">Senapati</option>
+                              <option value="Ukhrul">Ukhrul</option>
+                              <option value="Chandel">Chandel</option>
+                              <option value="Churachandpur">Churachandpur</option>
+                              <option value="Tamenglong">Tamenglong</option>
+                              <option value="Jiribam">Jiribam</option>
+                              <option value="Kangpokpi (Sadar Hills)">Kangpokpi (Sadar Hills)</option>
+                              <option value="Kakching">Kakching</option>
+                              <option value="Tengnoupal">Tengnoupal</option>
+                              <option value="Kamjong">Kamjong</option>
+                              <option value="Noney">Noney</option>
+                              <option value="Pherzawl">Pherzawl</option>
                               </select>
                             </div>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                <span class="input-group-text bg-success text-white">Contact Number</span>
                                     <span class="input-group-text"><i class="fa fa-phone"></i></span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Your Contact Number" id="contact_number" name="contact_number">
+                                <input type="text" class="form-control" maxlength="10" onfocusout="numval('contact_number');" onfocus="numval('contact_number');" onkeyup="numval('contact_number');" placeholder="Your Contact Number" id="contact_number" name="contact_number">
                             </div>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                <span class="input-group-text bg-success text-white">WhatsApp Number</span>
                                     <span class="input-group-text"><i class="fa fa-whatsapp"></i></span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Your WhatsApp Number" id="whatsapp_number" name="whatsapp_number">
+                                <input type="text" class="form-control" maxlength="10"   onfocus="numval('whatsapp_number');" onfocusout="numval('whatsapp_number');" onkeyup="numval('whatsapp_number');" placeholder="Your WhatsApp Number" id="whatsapp_number" name="waNo">
+                                <div class="input-group-append">
+                                  <span class="input-group-text bg-warning" onclick="sameno()" onMouseOver="this.style.cursor='pointer';"><b>copy</b><i class="fa fa-phone ml-2"></i></span>
+                              </div>
                             </div>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                <span class="input-group-text bg-success text-white">Email</span>
                                     <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Your Email Address" id="email" name="email">
+                                <input type="text" class="form-control" onkeyup="mailval('email');" placeholder="Your Email Address" id="email" name="email">
                                 <div class="input-group-append">
                                     <span class="input-group-text">@example.com</span>
                                     </div>
@@ -117,18 +130,16 @@
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                <span class="input-group-text bg-success text-white">Occupation</span>
                                     <span class="input-group-text"><i class="fa fa-user-md"></i></span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Your Occupation" id="occupation" name="occupation">
+                                <input type="text" onkeyup="capitalize('occupation');" class="form-control" placeholder="Your Occupation" id="occupation" name="occupation">
                             </div>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                <span class="input-group-text bg-success text-white">Highest Qualification</span>
                                     <span class="input-group-text"><i class="fa fa-graduation-cap"></i></span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Your Highest Qualification" id="highest_quali" name="highest_quali">
+                                <input type="text" class="form-control" placeholder="Your Highest Qualification" id="highest_quali" name="highest_qualification">
                             </div>
 
                             <div class="input-group mb-3">
@@ -138,10 +149,9 @@
                                 </div>
                                 <input type="date" class="form-control" placeholder="Your Date of Birth" id="dob" name="dob">
                             </div>
-
+                            <b>Course</b>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                <span class="input-group-text bg-success text-white">Course</span>
                                 <span class="input-group-text"><i class="fa fa-bars"></i></span>
                                 </div>
                                 <div class="form-control">
@@ -161,38 +171,42 @@
                             </div>
 
                             <!-- FILE -->
+                              <p id="error_message" style="display: none;"></p>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-success text-white">Passport Photo</span>
                                     <span class="input-group-text"><i class="fa fa-image"></i></span>
                                 </div>
                                 <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="customFile">
-                                  <label class="custom-file-label" for="customFile">Choose your Passport Photo</label>
+                                  <input type="file" class="custom-file-input" required id="passport_photo" name="passport_photo">
+                                  <label class="custom-file-label" for="customFile" ></label>
                                 </div>
                             </div> 
-
+                            
+                            
+                            <p id="error_message2" style="display: none;"></p>
                             <div class="input-group mb-5">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-success text-white">Signature Photo</span>
                                     <span class="input-group-text"><i class='fa fa-image'></i></span>
                                 </div>
                                 <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="customFile">
-                                  <label class="custom-file-label" for="customFile">Choose your Signature Photo</label>
+                                  <input type="file" class="custom-file-input" required id="signature_photo" name="signature_photo">
+                                  <label class="custom-file-label" for="customFile" ></label>
                                 </div>
                             </div> 
                               
                               
 
 
-                    <button type="submit" class="btn-block btn-lg btn-info">Submit</button>
+                    <button type="submit" class="btn-block btn-lg btn-info" name="sbtn">Submit</button>
                 </form>
 
                 <script>
                     // Add the following code if you want the name of the file appear on select
                     $(".custom-file-input").on("change", function() {
                       var fileName = $(this).val().split("\\").pop();
+                      fileName=fileName.substring(0,6)+"...";
                       $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
                     });
                     </script> 
@@ -210,6 +224,126 @@
     <!-- Copyright -->
   </footer>
   <!-- Footer -->
+
+  <!-- Instant Validation -->
+  <script>
+    function capitalize(input) {  
+        document.getElementById(input).value=document.getElementById(input).value.toLowerCase().split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');  
+      }
+      function lower(x){
+            document.getElementById(x).value=document.getElementById(x).value.toLowerCase();
+      }  
+
+    document.getElementById("test").addEventListener("click",sameno);
+    function test(){
+        var x=Math.floor((Math.random() * 100) + 1);
+        document.getElementById('fname').value="MyName "+x;
+        document.getElementById('address').value="MyAddress ";
+        document.getElementById("male").checked = true;
+        document.getElementById('district').value="Thoubal";
+        document.getElementById('contact_number').value="9876543210";
+        document.getElementById("test").addEventListener("click",sameno);
+        document.getElementById("email").value = "test@gmail.com";
+        document.getElementById("occupation").value = "Business";
+        document.getElementById("highest_quali").value = "Test Master";
+        document.getElementById("phase-I").checked = true;
+
+    }
+    function sameno(){
+      var element = document.getElementById("whatsapp_number");
+      var cpy=document.getElementById("contact_number");
+      if(cpy.value!=""){
+              if(element.value==""){
+                        element.value = document.getElementById("contact_number").value;
+                        element.classList.remove("bg-white","text-dark");
+                        element.classList.add("bg-secondary","text-white");
+                        element.setAttribute("readonly","true");
+              }else{
+                        element.value = "";
+                        element.classList.remove("bg-secondary","text-white");
+                        element.classList.add("bg-white");
+                        element.style.color="black";
+                        element.removeAttribute("readonly");
+              }
+              numval("whatsapp_number");
+      }
+    }
+function numval(x){
+    var check=/^[6-9]\d{9}$/;
+      if(!check.test(document.getElementById(x).value)){
+          document.getElementById(x).style.color="red";
+          document.getElementById(x).style.fontWeight="normal";
+      }else if(check.test(document.getElementById(x).value)){
+        document.getElementById(x).style.color="green";
+          document.getElementById(x).style.fontWeight="bold";
+      }
+  }
+  function mailval(){
+      var check=/^\w+[@][a-zA-Z]+[.][a-zA-Z]+$/;
+      if(!check.test(document.getElementById('email').value)){
+          document.getElementById('email').style.color="red";
+      }
+      else{
+          document.getElementById('email').style.color="green";
+          document.getElementById('email').style.fontWeight="bold";
+      }
+  }
+  /*
+  function icon(ic,id){
+    var check=/^[6-9]\d{9}$/;
+    if(id=="email"){
+       check=/^\w+[@][a-zA-Z]+[.][a-zA-Z]+$/;
+    }
+    if(!check.test(document.getElementById(id).value)){
+        if(document.getElementById(id).value==""){
+            document.getElementById(ic).innerHTML="";
+        }else{
+          document.getElementById(ic).innerHTML="&#10060;";
+        }
+    }else{
+      document.getElementById(ic).innerHTML="&#9989;";
+    }
+  }
+  */
+  </script>
+<!-- FILE SIZE CHECK JAVASCRIPT -->
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#passport_photo').on('change',function(){
+      for(var i=0; i< $(this).get(0).files.length; ++i){
+        var file1 = $(this).get(0).files[i].size;
+        if(file1){
+          var file_size = $(this).get(0).files[i].size;
+          if(file_size > 200000){
+            $('#error_message').html("Passport File upload size is larger than 200KB");
+            $('#error_message').css("display","block");
+            $('#error_message').css("color","red");
+          }else{
+            $('#error_message').css("display","none");
+          }
+        }
+      }
+    });
+  });
+
+  $(document).ready(function(){
+    $('#signature_photo').on('change',function(){
+      for(var i=0; i< $(this).get(0).files.length; ++i){
+        var file1 = $(this).get(0).files[i].size;
+        if(file1){
+          var file_size = $(this).get(0).files[i].size;
+          if(file_size > 200000){
+            $('#error_message2').html("Signature File upload size is larger than 200KB");
+            $('#error_message2').css("display","block");
+            $('#error_message2').css("color","red");
+          }else{
+            $('#error_message2').css("display","none");
+          }
+        }
+      }
+    });
+  });
+</script>
 
 </body>
 </html>

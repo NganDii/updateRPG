@@ -1,3 +1,10 @@
+<?php
+                if(count($_COOKIE)>0){
+                    echo ""; // for future use to DISPLAY USERNAME
+                }else{
+                    header("Location: admin_login.php?msg=Please log in again!");
+                }
+?>
 <!DOCTYPE html>  
 <html lang="en">
   <head>
@@ -36,7 +43,7 @@
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#"><button class="btn btn-danger" style="margin-top:8px;">Logout</button></a>
+      <a class="nav-link" href="logout.php"><button class="btn btn-danger" style="margin-top:8px;">Logout</button></a>
     </li>
   </ul>
 </nav>
@@ -49,16 +56,20 @@
                 <center>
                 <img class="card-img-top img-fluid" src="./images/logo_latest.png" alt="Logo" style="height: 200px; width: 300px;">
                 <div class="card-body">
+                    
+                <p id="this" style="visibility: hidden;color: red;" ></p>
                 <div class="container-sm">
-                <form method="POST" action="admin_home.php" class="needs-validation">
+                
+                <form method="POST" action="" class="needs-validation">
                             <div class="input-group mb-3 ml-1">
                                 <div class="input-group-prepend">
-                                <span class="input-group-text bg-info text-white">Student ID</span>
+                                <span class="input-group-text bg-success text-white">Student ID</span>
                                     <span class="input-group-text">&#128101;</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Student ID" id="stuid" name="stuid">
+                                <input type="text" class="form-control" placeholder="Student ID" id="id" name="id">
                             </div>
-                    <button type="submit" class="btn btn-lg btn-danger">Delete</button>
+                    <button type="submit" name="sbtn" class="btn btn-lg btn-danger">Delete</button>
+                    <a href="delete_stu.php"><button type="button" name="sbtn" class="btn btn-lg btn-secondary">Reset</button></a>
                 </form>
                 </div>
                 </div>
@@ -66,17 +77,30 @@
              </div>
         </div>
 
+        <?php
+            include "conndatabase.php";
+            if(isset($_POST['sbtn'])){
+                $id=$_POST['id'];
+                $checkvail="select * from rpgtable where `SL`='".$id."'";
+                $checkvail_query=$con->query($checkvail);
+                if(mysqli_num_rows($checkvail_query)<1){
+                    echo '<script>document.getElementById("this").style.visibility="visible"; document.getElementById("this").innerHTML="ID NOT FOUND";</script>';
+                }else{
+                    $row=$checkvail_query->fetch_array(MYSQLI_ASSOC);
+                    $sql = "delete from rpgtable where `SL`='$id'";
+                    if($con->query($sql)===TRUE){
+                        echo '<script>document.getElementById("this").style.visibility="visible"; document.getElementById("this").innerHTML="Deleted Successfully";</script>';
+                    }else{
+                        echo $con->error;
+                    }
+                }
+                
+            }
+?>
+
 
         <!-- Footer -->
-    <footer class="text-center text-lg-start bg-light text-muted">
-
-    <!-- Copyright -->
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-      &copy; 2021 Copyright:
-      <a class="text-reset fw-bold" href="http://rpgofficial.site">RPG, All Rights Reserved</a>
-    </div>
-    <!-- Copyright -->
-  </footer>
+    
   <!-- Footer -->
 
 </body>

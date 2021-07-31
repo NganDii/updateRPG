@@ -1,3 +1,10 @@
+<?php
+                if(count($_COOKIE)>0){
+                    echo ""; // for future use to DISPLAY USERNAME
+                }else{
+                    header("Location: admin_login.php?msg=Please log in again");
+                }
+?>
 <!DOCTYPE html>  
 <html lang="en">
   <head>
@@ -38,7 +45,7 @@
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#"><button class="btn btn-danger" style="margin-top:8px;">Logout</button></a>
+      <a class="nav-link" href="logout.php"><button class="btn btn-danger" style="margin-top:8px;">Logout</button></a>
     </li>
   </ul>
 </nav>
@@ -52,23 +59,15 @@
                 <img class="card-img-top img-fluid" src="./images/logo_latest.png" alt="Logo" style="height: 200px; width: 230px;">
                 <div class="card-body">
                     <h4 class="card-title">RPG OFFICIAL</h4>
-                    <a href="fetch.php"><button class="btn btn-lg btn-secondary mr-3 mb-3" style="width: 160px;">Database</button></a>
-                    <a href="delete_stu.php"><button class="btn btn-lg btn-danger mr-3">Delete Students</button></a>
+                    <a href="fetch.php"><button class="btn btn-lg btn-secondary mr-3 mt-3" style="width: 175px;">Database</button></a>
+                    <a href="delete_stu.php"><button class="btn btn-lg btn-danger mr-3 mt-3">Delete Students</button></a>
                 </div>
             </center>
              </div>
         </div>
         <!-- Footer -->
    <!-- Footer -->
-   <footer class="text-center text-lg-start bg-light text-muted">
-
-<!-- Copyright -->
-<div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-  &copy; 2021 Copyright:
-  <a class="text-reset fw-bold" href="http://rpgofficial.site">RPG, All Rights Reserved</a>
-</div>
-<!-- Copyright -->
-</footer>
+   
   <!-- Footer -->
 
 </body>

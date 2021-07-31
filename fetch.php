@@ -1,3 +1,14 @@
+<?php
+    if(count($_COOKIE)>0){
+        echo ""; // for future use to DISPLAY USERNAME
+    }else{
+        header("Location: admin_login.php?msg=Please log in again");
+    }
+    include "conndatabase.php";
+
+    $chk="Select * from rpgtable";
+    $query=$con->query($chk);
+?>
 <!DOCTYPE html>  
 <html lang="en">
   <head>
@@ -38,7 +49,7 @@
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#"><button class="btn btn-danger" style="margin-top:8px;">Logout</button></a>
+      <a class="nav-link" href="logout.php"><button class="btn btn-danger" style="margin-top:8px;">Logout</button></a>
     </li>
   </ul>
 </nav>
@@ -84,22 +95,28 @@
         </tr>
       </thead>
       <tbody>
+      <?php
+    while($row=$query->fetch_array(MYSQLI_ASSOC)){
+        ?>
         <tr>
-          <td>1</td>
-          <td>Anna</td>
-          <td>Pitt</td>
-          <td>35</td>
-          <td>New York</td>
-          <td>USA</td>
-          <td>Female</td>
-          <td>Yes</td>
-          <td>Yes</td>
-          <td>Yes</td>
-          <td>Yes</td>
-          <td>Yes</td>
-          <td>Yes</td>
-          <td>Yes</td>
+          <td><?php echo $row['SL'];?></td>
+          <td><?php echo $row['FullName'];?></td>
+          <td><?php echo $row['Address'];?></td>
+          <td><?php echo $row['Gender'];?></td>
+          <td><?php echo $row['District'];?></td>
+          <td><?php echo $row['ContactNumber'];?></td>
+          <td><?php echo $row['WhatsAppNumber'];?></td>
+          <td><?php echo $row['Email'];?></td>
+          <td><?php echo $row['Occupation'];?></td>
+          <td><?php echo $row['HighestQualification'];?></td>
+          <td><?php echo $row['DateOfBirth'];?></td>
+          <td><?php echo $row['Course'];?></td>
+          <td><?php echo "<a target='_blank' href='view.php?id=".$row['SL']."'><img src='data:image;base64,".base64_encode($row['Passport'])."' alt='Image' style='width: 100px; height: 100px;'></a>" ?></td>
+          <td><?php echo "<a target='_blank' href='viewSig.php?id=".$row['SL']."'><img src='data:image;base64,".base64_encode($row['Signature'])."' alt='Image' style='width: 100px; height: 100px;'></a>" ?></td>
         </tr>
+        <?php
+        }
+        ?>
       </tbody>
     </table>
   </div>
